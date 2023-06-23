@@ -45,6 +45,7 @@ module.exports = {
     ERROR_INVALID_CONTENT_TYPE,
     ERROR_REQUIRE_FIELDS,
     ERROR_INVALID_EMAIL,
+    ERROR_INVALID_NOME,
 
     //Exportes de sucesso
     SUCCESS_CREATED_ITEM,

@@ -136,6 +136,12 @@ insert into tbl_lojista(
     3
 );
 
+#TipoProduto
+insert into tbl_tipo_produto(nome) values ('Cachorros'), ('Gatos'), ('Aves');
+
+#Produto
+
+
 -- ----------------------------- SELECTS ----------------------------- --
 #StatusUsuario
 select * from tbl_status_usuario;
@@ -182,7 +188,8 @@ from tbl_lojista as lojista
 	inner join tbl_status_usuario as status_usuario 
 			on usuario.id_status_usuario = status_usuario.id;
             
-            
+#TipoProduto
+select tipo_produto.id, tipo_produto.nome as tipo from tbl_tipo_produto as tipo_produto;
             
             
             

@@ -366,6 +366,54 @@ app.get('/v1/avicultura-silsan/lojista/:id', cors(), async function (request, re
     response.json(dadosLojistas)
 })
 
+/*****************************************************************************************************************
+* Objetivo: API de controle de TIPO_PRODUTO
+* Data: 23/06/2023
+* Autor: Luiz Gustavo
+* Versão: 1.0
+******************************************************************************************************************/
+
+//Import do araquivo da controler que irá solicitar a model os do BD
+var controllerTipoProduto = require('./controller/controller_tipo-produto.js')
+
+//EndPoint: Retorna todos os TipoProduto
+app.get('/v1/avicultura-silsan/tipo-produto', cors(), async function (request, response) {
+    let dadosTipoProduto = await controllerTipoProduto.ctlGetTipoProduto()
+
+    response.status(dadosTipoProduto.status)
+    response.json(dadosTipoProduto)
+})
+
+//EndPoint: Retorna o TipoProduto pelo id
+app.get('/v1/avicultura-silsan/tipo-produto/:id', cors(), async function (request, response) {
+    let idTipoProduto = request.params.id
+
+    let dadosTipoProduto = await controllerTipoProduto.ctlGetTipoProdutoPeloId(idTipoProduto)
+
+    response.status(dadosTipoProduto.status)
+    response.json(dadosTipoProduto)
+})
+
+//EndPoint: Insere um produto novo
+app.post('/v1/avicultura-silsan/tipo-produto', cors(), bodyParserJson, async function (request, response) {
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        let resultDadosTipoProduto = await controllerTipoProduto.ctlInserirTipoProduto(dadosBody)
+
+        response.status(resultDadosTipoProduto.status)
+        response.json(resultDadosTipoProduto)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
 
 /*****************************************************************************************************************
 * Objetivo: API de controle de PRODUTOS

@@ -36,7 +36,7 @@ const mdlSelectAllProdutos = async function () {
     		on produto.id_lojista = lojista.id;`;
 
     //$queryRawUnsafe(sql) - permite interpretar uma variavel como sendo um sriptSQL
-    //queryRaw('select * from tbl_aluno') - permite interpretar o scriptSQL direto no metodo
+    //queryRaw('select * from tbl_produto') - permite interpretar o scriptSQL direto no metodo
     let rsProduto = await prisma.$queryRawUnsafe(sql)
 
     //Valida de o Banco de Dados retornou algum registro
