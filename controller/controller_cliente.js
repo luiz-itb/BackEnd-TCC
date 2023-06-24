@@ -56,6 +56,28 @@ const ctlGetClienteID = async (id) => {
     }
 }
 
+const ctlGetClienteIdUsuario = async (idUsuario) => {
+    if (idUsuario == '' || idUsuario == undefined || isNaN(idUsuario)) {
+        return message.ERROR_INVALID_ID
+    } else {
+        let dadosClientesJSON = {}
+
+        //Chama a função do arquivo DAO que irá retornar todos os resgistros do DB
+        let dadosClientes = await clienteDao.mdlSelectClienteByIdUsuario(idUsuario)
+
+        if (dadosClientes) {
+            dadosClientesJSON = {
+                status: message.SUCCESS_REQUEST.status,
+                message: message.SUCCESS_REQUEST.message,
+                clientes: dadosClientes
+            }
+            return dadosClientesJSON
+        } else {
+            return message.ERROR_REGISTER_NOT_FOUND
+        }
+    }
+}
+
 const ctlInserirCliente = async (dadosCliente) => {
     if(
         dadosCliente.nome == '' || dadosCliente.nome == undefined || dadosCliente.nome == null || dadosCliente.nome.length > 80 ||
@@ -87,5 +109,6 @@ const ctlInserirCliente = async (dadosCliente) => {
 module.exports = {
     ctlGetClientes,
     ctlGetClienteID,
+    ctlGetClienteIdUsuario,
     ctlInserirCliente
 }

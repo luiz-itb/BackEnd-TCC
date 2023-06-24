@@ -66,6 +66,31 @@ const mdlSelectLojistaId = async (id) => {
     }
 }
 
+const mdlSelectLojistaIdUsuario = async (idUsuario) => {
+    let sql = `
+    select 
+	    lojista.id as id_lojista,
+        lojista.nome,
+        lojista.telefone,
+        lojista.id_usuario,
+        usuario.email,
+        status_usuario.nivel
+    from tbl_lojista as lojista
+    	inner join tbl_usuario as usuario 
+	    	on lojista.id_usuario = usuario.id
+	    inner join tbl_status_usuario as status_usuario 
+			on usuario.id_status_usuario = status_usuario.id
+    where lojista.id_usuario= ${idUsuario} ;`
+
+    let rsLojista = await prisma.$queryRawUnsafe(sql)
+
+    if (rsLojista.length > 0) {
+        return rsLojista
+    } else {
+        return false
+    }
+}
+
 //Retorna o ultimo id inserido no BD
 const mdlSelectLastId = async function () {
 
@@ -97,5 +122,6 @@ const mdlSelectLastId = async function () {
 module.exports = {
     mdlSelectAllLojista,
     mdlSelectLojistaId,
+    mdlSelectLojistaIdUsuario,
     mdlSelectLastId
 }

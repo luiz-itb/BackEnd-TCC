@@ -56,6 +56,28 @@ const ctlGetLojistaID = async (id) => {
     }
 }
 
+const ctlGetLojistaIdUsuario = async (idUsuario) => {
+    if (idUsuario == '' || idUsuario == undefined || isNaN(idUsuario)) {
+        return message.ERROR_INVALID_ID
+    } else {
+        let dadosLojistasJSON = {}
+
+        //Chama a função do arquivo DAO que irá retornar todos os resgistros do DB
+        let dadosLojista = await lojistaDao.mdlSelectLojistaIdUsuario(idUsuario)
+
+        if (dadosLojista) {
+            dadosLojistasJSON = {
+                status: message.SUCCESS_REQUEST.status,
+                message: message.SUCCESS_REQUEST.message,
+                lojistas: dadosLojista
+            }
+            return dadosLojistasJSON
+        } else {
+            return message.ERROR_REGISTER_NOT_FOUND
+        }
+    }
+}
+
 const ctlInserirCliente = async (dadosCliente) => {
     if(
         dadosCliente.nome == '' || dadosCliente.nome == undefined || dadosCliente.nome == null || dadosCliente.nome.length > 80 ||
@@ -86,5 +108,6 @@ const ctlInserirCliente = async (dadosCliente) => {
 
 module.exports = {
     ctlGetLojistas,
-    ctlGetLojistaID
+    ctlGetLojistaID,
+    ctlGetLojistaIdUsuario
 }

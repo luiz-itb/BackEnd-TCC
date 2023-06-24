@@ -138,17 +138,17 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
 
             if (dadosUsuario) {
                 if (dadosUsuario[0].nivel == 'Lojista') {
-                    let pegarLojista = await controllerLojista.ctlGetLojistaID(dadosUsuario[0].id_usuario)
+                    let pegarLojista = await controllerLojista.ctlGetLojistaIdUsuario(dadosUsuario[0].id)
 
-                    if (pegarLojista) {
+                    if (pegarLojista.status == 200) {
                         dadosUsuariosJSON = {
                             status: message.SUCCESS_REQUEST.status,
                             message: message.SUCCESS_REQUEST.message,
                             usuario: dadosUsuario,
                             lojista: {
-                                id: pegarLojista[0].id_lojista,
-                                nome: pegarLojista[0].nome,
-                                telefone: pegarLojista[0].telefone,
+                                id: pegarLojista.lojistas[0].id_lojista,
+                                nome: pegarLojista.lojistas[0].nome,
+                                telefone: pegarLojista.lojistas[0].telefone,
                             }
                         }
                         return dadosUsuariosJSON
@@ -156,18 +156,18 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
                         return message.ERROR_INVALID_ID
                     }
                 } else if (dadosUsuario[0].nivel == 'Cliente') {
-                    let pegarCliente = await controllerCliente.ctlGetClienteID(dadosUsuario[0].id_usuario)
+                    let pegarCliente = await controllerCliente.ctlGetClienteIdUsuario(dadosUsuario[0].id)
 
-                    if (pegarCliente) {
+                    if (pegarCliente.status == 200) {
                         dadosUsuariosJSON = {
                             status: message.SUCCESS_REQUEST.status,
                             message: message.SUCCESS_REQUEST.message,
                             usuario: dadosUsuario,
                             cliente: {
-                                id: pegarCliente[0].id_cliente,
-                                nome: pegarCliente[0].nome,
-                                telefone: pegarCliente[0].telefone,
-                                data_nascimento: pegarCliente[0].data_nascimento
+                                id: pegarCliente.clientes[0].id_cliente,
+                                nome: pegarCliente.clientes[0].nome,
+                                telefone: pegarCliente.clientes[0].telefone,
+                                data_nascimento: pegarCliente.clientes[0].data_nascimento
                             }
                         }
                         return dadosUsuariosJSON
