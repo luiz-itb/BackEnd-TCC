@@ -19,39 +19,12 @@ const ctlGetProdutos = async function () {
     let dadosProduto = await produtosDAO.mdlSelectAllProdutos()
 
     if (dadosProduto) {
-        let arrayResponse = []
-        let jsonItem = []
-
-        for (let index = 0; index < dadosProduto.length; index++) {
-            let produto = {
-                id: dadosProduto[index].id,
-                nome: dadosProduto[index].nome_produto,
-                descricao: dadosProduto[index].descricao_produto,
-                peso: dadosProduto[index].peso_produto,
-                cupom: dadosProduto[index].cupom_produto,
-                url: dadosProduto[index].url_produto,
-                status: dadosProduto[index].status_produto
-            }
-
-            let lojista = {
-                id: dadosProduto[index].id_lojista,
-                nome: dadosProduto[index].nome_lojista,
-                email: dadosProduto[index].email_lojista
-            }
-
-            jsonItem = {
-                produto: produto,
-                lojista: lojista
-            }
-            arrayResponse.push(jsonItem)
-        }
-
         //Criando um JSON com o atributo aluno, para encaminhar um array de alunos
         dadosProdutosJSON = {
             status: message.SUCCESS_REQUEST.status,
             message: message.SUCCESS_REQUEST.message,
             quantidade: dadosProduto.length,
-            itens: arrayResponse
+            itens: dadosProduto
         }
         return dadosProdutosJSON
     } else {
@@ -72,38 +45,11 @@ const ctlGetProdutoPeloId = async function (id) {
         let dadosProduto = await produtosDAO.mdlSelectProdutoById(id)
 
         if (dadosProduto) {
-            let arrayResponse = []
-            let jsonItem = []
-
-            for (let index = 0; index < dadosProduto.length; index++) {
-                let produto = {
-                    id: dadosProduto[index].id,
-                    nome: dadosProduto[index].nome_produto,
-                    descricao: dadosProduto[index].descricao_produto,
-                    peso: dadosProduto[index].peso_produto,
-                    cupom: dadosProduto[index].cupom_produto,
-                    url: dadosProduto[index].url_produto,
-                    status: dadosProduto[index].status_produto
-                }
-
-                let lojista = {
-                    id: dadosProduto[index].id_lojista,
-                    nome: dadosProduto[index].nome_lojista,
-                    email: dadosProduto[index].email_lojista
-                }
-
-                jsonItem = {
-                    produto: produto,
-                    lojista: lojista
-                }
-                arrayResponse.push(jsonItem)
-            }
-
             //Criando um JSON com o atributo aluno, para encaminhar um array de produtos
             dadosProdutosJSON = {
                 status: message.SUCCESS_REQUEST.status,
                 message: message.SUCCESS_REQUEST.message,
-                item: arrayResponse
+                item: dadosProduto
             }
 
             return dadosProdutosJSON

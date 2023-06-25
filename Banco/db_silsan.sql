@@ -247,8 +247,8 @@ from tbl_lojista as lojista
 #TipoProduto
 select tipo_produto.id, tipo_produto.nome as tipo from tbl_tipo_produto as tipo_produto;
 
+#Produto
 select * from tbl_produto;
-
 select 
 	    produto.id, 
         produto.nome as nome_produto, 
@@ -262,8 +262,6 @@ select
     from tbl_produto as produto
 	    inner join tbl_tipo_produto as tipo_produto
     		on produto.id_tipo_produto = tipo_produto.id;
-            
-            
             
 
 
