@@ -21,19 +21,18 @@ const mdlSelectAllProdutos = async function () {
 
     //Script para buscar todos os itens no BD
     let sql = `select 
-	    produto.id, 
+        produto.id, 
         produto.nome as nome_produto, 
         produto.descricao as descricao_produto, 
         produto.peso as peso_produto,
         produto.cupom as cupom_produto,
         produto.url as url_produto,
         produto.status_produto,
-        produto.id_lojista,
-        lojista.nome as nome_lojista,
-        lojista.email as email_lojista
+        produto.id_tipo_produto,
+        tipo_produto.nome as tipo_produto
     from tbl_produto as produto
-	    inner join tbl_lojista as lojista
-    		on produto.id_lojista = lojista.id;`;
+        inner join tbl_tipo_produto as tipo_produto
+            on produto.id_tipo_produto = tipo_produto.id;`;
 
     //$queryRawUnsafe(sql) - permite interpretar uma variavel como sendo um sriptSQL
     //queryRaw('select * from tbl_produto') - permite interpretar o scriptSQL direto no metodo
@@ -52,19 +51,18 @@ const mdlSelectProdutoById = async function (id) {
 
     //Script para buscar todos os itens no BD
     let sql = `select 
-	    produto.id, 
+        produto.id, 
         produto.nome as nome_produto, 
         produto.descricao as descricao_produto, 
         produto.peso as peso_produto,
         produto.cupom as cupom_produto,
         produto.url as url_produto,
         produto.status_produto,
-        produto.id_lojista,
-        lojista.nome as nome_lojista,
-        lojista.email as email_lojista
+        produto.id_tipo_produto,
+        tipo_produto.nome as tipo_produto
     from tbl_produto as produto
-	    inner join tbl_lojista as lojista
-    		on produto.id_lojista = lojista.id
+        inner join tbl_tipo_produto as tipo_produto
+            on produto.id_tipo_produto = tipo_produto.id
     where produto.id = ${id};`;
 
     //$queryRawUnsafe(sql) - permite interpretar uma variavel como sendo um sriptSQL
@@ -79,6 +77,32 @@ const mdlSelectProdutoById = async function (id) {
     }
 }
 
+const mdlSelectLastId = async function () {
+
+    let sql = `
+    select 
+        produto.id, 
+        produto.nome as nome_produto, 
+        produto.descricao as descricao_produto, 
+        produto.peso as peso_produto,
+        produto.cupom as cupom_produto,
+        produto.url as url_produto,
+        produto.status_produto,
+        produto.id_tipo_produto,
+        tipo_produto.nome as tipo_produto
+    from tbl_produto as produto
+        inner join tbl_tipo_produto as tipo_produto
+            on produto.id_tipo_produto = tipo_produto.id order by id desc limit 1;`
+
+    let rsProduto = await prisma.$queryRawUnsafe(sql)
+
+    if (rsProduto.length > 0) {
+        return rsProduto
+    } else {
+        return false
+    }
+}
+
 const mdlInsertProduto = async (dadosProduto) => {
     let sql = `
     insert into tbl_produto(
@@ -87,21 +111,26 @@ const mdlInsertProduto = async (dadosProduto) => {
         peso,
         cupom,
         url,
-        id_lojista
-    ) values (
-          '${dadosProduto.nome}',
-          '${dadosProduto.descricao}',
-           ${dadosProduto.peso},
-          '${dadosProduto.cupm}',
-          '${dadosProduto.url}',
-          ${dadosProduto.id_lojista}
-    );`
+        preco_original,
+        preco_desconto,
+        id_tipo_produto
+    )values(
+        '${dadosProduto.nome}',
+        '${dadosProduto.descricao}',
+        ${dadosProduto.peso},
+        '${dadosProduto.cupm}',
+        '${dadosProduto.url}',
+        ${dadosProduto.preco_original},
+        ${dadosProduto.preco_desconto},
+        ${dadosProduto.id_tipo_produto}
+    );
+    `
 
     let resultStatus = await prisma.$executeRawUnsafe(sql)
 
-    if(resultStatus){
-        return true 
-    }else{
+    if (resultStatus) {
+        return true
+    } else {
         return false
     }
 }
@@ -109,5 +138,6 @@ const mdlInsertProduto = async (dadosProduto) => {
 module.exports = {
     mdlSelectAllProdutos,
     mdlSelectProdutoById,
+    mdlSelectLastId,
     mdlInsertProduto
 }

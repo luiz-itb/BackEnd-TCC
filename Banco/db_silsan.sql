@@ -140,7 +140,63 @@ insert into tbl_lojista(
 insert into tbl_tipo_produto(nome) values ('Cachorros'), ('Gatos'), ('Aves');
 
 #Produto
-
+insert into tbl_produto(
+	nome,
+    descricao,
+    peso,
+    cupom,
+    url,
+    preco_original,
+    preco_desconto,
+    id_tipo_produto
+)values(
+	'Ração Golden Special para Cães Adultos Frango e Carne',
+    'Preparada com nobres ingredientes, a Ração Golden Special para Cães Adultos Frango e Carne é o alimento ideal para manter o seu cão saudável. Além de render mais por quilograma, ela é livre de corantes e aromatizantes artificiais, proporcionando uma dieta mais balanceada.',
+    15,
+    'BDGC15',
+    'https://cobasi.vteximg.com.br/arquivos/ids/939251-400-400/racao-golden-special-para-caes-adultos-frango-e-carne-3310549-15kg-Lado.jpg?v=638122446361370000',
+    149.99,
+    129.99,
+    1
+);
+insert into tbl_produto(
+	nome,
+    descricao,
+    peso,
+    cupom,
+    url,
+    preco_original,
+    preco_desconto,
+    id_tipo_produto
+)values(
+	'Ração GranPlus Choice Gatos Adultos Frango e Carne',
+    'A Ração GranPlus Choice Gatos Adultos Frango e Carne é o alimento ideal para o seu pet. Produzido com ingredientes nobres e ricos em vitaminas, essa é a sugestão perfeita para estimular o seu animal de estimação a ter uma rotina mais ativa e saudável.',
+    10.1,
+    'GATO24',
+    'https://cobasi.vteximg.com.br/arquivos/ids/1038013-400-400/Choice-Gatos-Adultos-Frango-e-Carne-Frente.jpg?v=638066453440670000',
+    139.99,
+    109.99,
+    2
+);
+insert into tbl_produto(
+	nome,
+    descricao,
+    peso,
+    cupom,
+    url,
+    preco_original,
+    preco_desconto,
+    id_tipo_produto
+)values(
+	'Ração Pedigree Nutrição Essencial Carne para Cães Adultos',
+    'Para garantir que nossos peludinhos tenham uma vida longa e saudável, é necessário oferecer alimentos com os nutrientes essenciais para o organismo deles. Por este motivo, foi desenvolvida a ração Pedigree Nutrição Essencial, uma refeição balanceada e completa.',
+    15,
+    'CAHC15',
+    'https://images.petz.com.br/fotos/1663617053912.jpg',
+    155.99,
+    125.99,
+    1
+);
 
 -- ----------------------------- SELECTS ----------------------------- --
 #StatusUsuario
@@ -190,6 +246,22 @@ from tbl_lojista as lojista
             
 #TipoProduto
 select tipo_produto.id, tipo_produto.nome as tipo from tbl_tipo_produto as tipo_produto;
+
+select * from tbl_produto;
+
+select 
+	    produto.id, 
+        produto.nome as nome_produto, 
+        produto.descricao as descricao_produto, 
+        produto.peso as peso_produto,
+        produto.cupom as cupom_produto,
+        produto.url as url_produto,
+        produto.status_produto,
+        produto.id_tipo_produto,
+        tipo_produto.nome as tipo_produto
+    from tbl_produto as produto
+	    inner join tbl_tipo_produto as tipo_produto
+    		on produto.id_tipo_produto = tipo_produto.id;
             
             
             

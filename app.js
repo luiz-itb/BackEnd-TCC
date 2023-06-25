@@ -427,7 +427,7 @@ var controllerProduto = require('./controller/controller_produto.js')
 
 //EndPoint: Retorna todos os dados de produtos ou pelo id do lojista por query
 app.get('/v1/avicultura-silsan/produto', cors(), async function (request, response) {
-    let dadosProduto = await controllerProduto.getProdutos()
+    let dadosProduto = await controllerProduto.ctlGetProdutos()
 
     response.status(dadosProduto.status)
     response.json(dadosProduto)
@@ -437,7 +437,7 @@ app.get('/v1/avicultura-silsan/produto', cors(), async function (request, respon
 app.get('/v1/avicultura-silsan/produto/:id', cors(), async function (request, response) {
     let idProduto = request.params.id
 
-    let dadosProduto = await controllerProduto.getProdutoPeloId(idProduto)
+    let dadosProduto = await controllerProduto.ctlGetProdutoPeloId(idProduto)
 
     response.status(dadosProduto.status)
     response.json(dadosProduto)
@@ -453,10 +453,10 @@ app.post('/v1/avicultura-silsan/produto', cors(), bodyParserJson, async function
         //Recebe os dados encaminhados na requisição
         let dadosBody = request.body
 
-        let resultDadosProdutos
+        let resultDadosProdutos = await controllerProduto.ctlInserirProduto(dadosBody)
 
-        response.status(resultDadosAlunos.status)
-        response.json(resultDadosAlunos)
+        response.status(resultDadosProdutos.status)
+        response.json(resultDadosProdutos)
     } else {
         response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
         response.json(message.ERROR_INVALID_CONTENT_TYPE)
