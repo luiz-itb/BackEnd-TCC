@@ -117,11 +117,31 @@ const mdlSelectLastId = async function () {
     }
 }
 
+const mdlInsertLojistaUsuario = async (dadosLojistaUsuario) => {
+    let sql = `
+    call sp_inserir_lojista_usuario(
+        '${dadosLojistaUsuario.email_usuario}',
+        '${dadosLojistaUsuario.senha_usuario}',
+        '${dadosLojistaUsuario.nome_lojista}',
+        '${dadosLojistaUsuario.telefone_lojista}'    
+        );
+    `
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if (resultStatus) {
+        return resultStatus
+    } else {
+        return false
+    }
+}
+
 
 
 module.exports = {
     mdlSelectAllLojista,
     mdlSelectLojistaId,
     mdlSelectLojistaIdUsuario,
-    mdlSelectLastId
+    mdlSelectLastId,
+    mdlInsertLojistaUsuario
 }

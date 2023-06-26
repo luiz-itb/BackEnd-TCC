@@ -338,6 +338,27 @@ app.post('/v1/avicultura-silsan/cliente', cors(), bodyParserJson, async function
     }
 })
 
+//EndPoint: Insere um novo cliente junto com o usuario
+app.post('/v1/avicultura-silsan/cliente-usuario', cors(), bodyParserJson, async function (request, response) {
+
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        let resultDadosCliente = await controllerCliente.ctlInserirClienteUsuario(dadosBody)
+
+        response.status(resultDadosCliente.status)
+        response.json(resultDadosCliente)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
 /*****************************************************************************************************************
 * Objetivo: API de controle de LOJISTAS
 * Data: 20/06/2023
@@ -364,6 +385,27 @@ app.get('/v1/avicultura-silsan/lojista/:id', cors(), async function (request, re
 
     response.status(dadosLojistas.status)
     response.json(dadosLojistas)
+})
+
+//EndPoint: Insere um novo lojista junto com o usuario
+app.post('/v1/avicultura-silsan/lojista-usuario', cors(), bodyParserJson, async function (request, response) {
+
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        let resultDadosLojista = await controllerLojsita.ctlInserirLojistaUsuario(dadosBody)
+
+        response.status(resultDadosLojista.status)
+        response.json(resultDadosLojista)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
 })
 
 /*****************************************************************************************************************

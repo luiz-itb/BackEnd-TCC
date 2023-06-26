@@ -13,6 +13,7 @@
 
 var message = require('./modulo/config.js')
 var lojistaDao = require('../model/DAO/lojistaDAO.js')
+var usuarioDAO = require('../model/DAO/usuarioDAO.js')
 
 //Retorna todos os lojistas
 const ctlGetLojistas = async () => {
@@ -78,28 +79,30 @@ const ctlGetLojistaIdUsuario = async (idUsuario) => {
     }
 }
 
-const ctlInserirCliente = async (dadosCliente) => {
-    if(
-        dadosCliente.nome == '' || dadosCliente.nome == undefined || dadosCliente.nome == null || dadosCliente.nome.length > 80 ||
-        dadosCliente.telefone == '' || dadosCliente.telefone == undefined || dadosCliente.telefone == null || dadosCliente.telefone.length > 15 ||
-        dadosCliente.data_nascimento == '' || dadosCliente.data_nascimento == undefined || dadosCliente.data_nascimento == null ||
-        dadosCliente.id_usuario == '' || dadosCliente.id_usuario == undefined || dadosCliente.id_usuario == null || isNaN(dadosCliente.id_usuario)
-    ){
+const ctlInserirLojistaUsuario = async (dadosLojistaUsuario) => {
+    if (
+        dadosLojistaUsuario.email_usuario == '' || dadosLojistaUsuario.email_usuario == undefined || dadosLojistaUsuario.email_usuario == null || dadosLojistaUsuario.email_usuario.length > 255 ||
+        dadosLojistaUsuario.senha_usuario == '' || dadosLojistaUsuario.senha_usuario == undefined || dadosLojistaUsuario.senha_usuario == null || dadosLojistaUsuario.senha_usuario.length > 270 ||
+        dadosLojistaUsuario.nome_lojista == '' || dadosLojistaUsuario.nome_lojista == undefined || dadosLojistaUsuario.nome_lojista == null || dadosLojistaUsuario.nome_lojista.length > 80 ||
+        dadosLojistaUsuario.telefone_lojista == '' || dadosLojistaUsuario.telefone_lojista == undefined || dadosLojistaUsuario.telefone_lojista == null || dadosLojistaUsuario.telefone_lojista.length > 15
+    ) {
         return message.ERROR_REQUIRE_FIELDS
-    }else{
-        let resultStatus = await clienteDao.mdlInsertCliente(dadosCliente)
+    } else {
+        let resultStatus = await lojistaDao.mdlInsertLojistaUsuario(dadosLojistaUsuario)
 
-        if(resultStatus){
-            let novoCliente = await clienteDao.mdlSelectLastId()
+        if (resultStatus) {
+            let novoLojista = await lojistaDao.mdlSelectLastId()
+            let novoUsuario = await usuarioDAO.mdlSelectLastByID()
 
-            let dadosClienteJSON = {
+            let dadosLojistaJSON = {
                 status: message.SUCCESS_CREATED_ITEM.status,
                 message: message.SUCCESS_CREATED_ITEM.message,
-                novo_cliente: novoCliente
+                lojista: novoLojista,
+                usuario: novoUsuario
             }
 
-            return dadosClienteJSON
-        }else{
+            return dadosLojistaJSON
+        } else {
             return message.ERROR_INTERNAL_SERVER
         }
     }
@@ -109,5 +112,6 @@ const ctlInserirCliente = async (dadosCliente) => {
 module.exports = {
     ctlGetLojistas,
     ctlGetLojistaID,
-    ctlGetLojistaIdUsuario
+    ctlGetLojistaIdUsuario,
+    ctlInserirLojistaUsuario
 }

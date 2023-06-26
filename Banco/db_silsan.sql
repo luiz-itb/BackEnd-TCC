@@ -264,6 +264,67 @@ select
     		on produto.id_tipo_produto = tipo_produto.id;
             
 
+########## PROCEDURE PARA INSERT ##########
+
+# PROCEDURE USUARIO_CLIENTE
+DELIMITER //
+create procedure sp_inserir_cliente_usuario(
+    in email_usuario varchar(255),
+    in senha_usuario varchar(270),
+    in nome_cliente varchar(80),
+	in telefone_cliente varchar(15),
+    in data_nascimento_cliente date
+)
+begin
+    declare id_usuario_cliente int;
+
+    -- Inserir dados na tabela tbl_usuario
+    insert into tbl_usuario (email, senha, status_usuario)
+    values (email_usuario, senha_usuario, 3);
+    
+    -- Obter o ID do usuario inserido
+    set id_usuario_cliente = LAST_INSERT_ID();
+
+    -- Inserir dados na tabela tbl_cliente
+    insert into tbl_usuario (nome, telefone, data_nascimento, id_usuario)
+    values (nome_cliente, telefone_cliente, data_nascimento_cliente, id_usuario_cliente);
+end //
+DELIMITER ;
+
+
+# PROCEDURE USUARIO_LOJISTA
+DELIMITER //
+create procedure sp_inserir_lojista_usuario(
+    in email_usuario varchar(255),
+    in senha_usuario varchar(270),
+    in nome_lojista varchar(80),
+	in telefone_lojista varchar(15)
+)
+begin
+    declare id_usuario_lojista int;
+
+    -- Inserir dados na tabela tbl_usuario
+    insert into tbl_usuario (email, senha, status_usuario)
+    values (email_usuario, senha_usuario, 3);
+    
+    -- Obter o ID do usuario inserido
+    set id_usuario_lojista = LAST_INSERT_ID();
+
+    -- Inserir dados na tabela tbl_cliente
+    insert into tbl_lojista (nome, telefone, id_usuario)
+    values (nome_lojista, telefone_lojista, id_usuario_lojista );
+end //
+DELIMITER ;
+
+
+
+
+
+
+
+
+
+
 
 
 

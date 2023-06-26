@@ -35,9 +35,9 @@ const mdlSelectAllClientes = async () => {
 
     let rsCliente = await prisma.$queryRawUnsafe(sql)
 
-    if(rsCliente.length > 0){
+    if (rsCliente.length > 0) {
         return rsCliente
-    }else{
+    } else {
         return false
     }
 }
@@ -61,9 +61,9 @@ const mdlSelectClienteByID = async (id) => {
 
     let rsCliente = await prisma.$queryRawUnsafe(sql)
 
-    if(rsCliente.length > 0){
+    if (rsCliente.length > 0) {
         return rsCliente
-    }else{
+    } else {
         return false
     }
 }
@@ -87,15 +87,15 @@ const mdlSelectClienteByIdUsuario = async (idUsuario) => {
 
     let rsCliente = await prisma.$queryRawUnsafe(sql)
 
-    if(rsCliente.length > 0){
+    if (rsCliente.length > 0) {
         return rsCliente
-    }else{
+    } else {
         return false
     }
 }
 
 //Retorna o ultimo id inserido no BD
-const mdlSelectLastId = async function (){
+const mdlSelectLastId = async function () {
 
     let sql = `
     select 
@@ -114,7 +114,7 @@ const mdlSelectLastId = async function (){
 
     let rsCliente = await prisma.$queryRawUnsafe(sql);
 
-    if (rsCliente.length > 0){
+    if (rsCliente.length > 0) {
         return rsCliente;
     } else {
         return false;
@@ -138,17 +138,38 @@ const mdlInsertCliente = async (dadosCliente) => {
 
     let resultStatus = await prisma.$executeRawUnsafe(sql)
 
-    if(resultStatus){
+    if (resultStatus) {
         return resultStatus
-    }else{
+    } else {
+        return false
+    }
+}
+
+const mdlInsertClienteUsuario = async (dadosClienteUsuario) => {
+    let sql = `
+    call sp_inserir_cliente_usuario(
+        '${dadosClienteUsuario.email_usuario}',
+        '${dadosClienteUsuario.senha_usuario}',
+        '${dadosClienteUsuario.nome_cliente}',
+        '${dadosClienteUsuario.telefone_cliente}',
+        '${dadosClienteUsuario.data_nascimento_cliente}'
+    );
+    `
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if (resultStatus) {
+        return resultStatus
+    } else {
         return false
     }
 }
 
 module.exports = {
-   mdlSelectAllClientes,
-   mdlSelectClienteByID,
-   mdlSelectClienteByIdUsuario,
-   mdlSelectLastId,
-   mdlInsertCliente
+    mdlSelectAllClientes,
+    mdlSelectClienteByID,
+    mdlSelectClienteByIdUsuario,
+    mdlSelectLastId,
+    mdlInsertCliente,
+    mdlInsertClienteUsuario
 }
