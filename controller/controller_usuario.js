@@ -178,7 +178,7 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
                     dadosUsuariosJSON = {
                         status: message.SUCCESS_REQUEST.status,
                         message: message.SUCCESS_REQUEST.message,
-                        usuarios: dadosUsuario
+                        usuario: dadosUsuario
                     }
                     return dadosUsuariosJSON
                 }
