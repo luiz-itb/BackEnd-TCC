@@ -20,7 +20,20 @@ var prisma = new PrismaClient();
 const mdlSelectAllProdutos = async function () {
 
     //Script para buscar todos os itens no BD
-    let sql = `select * from tbl_produto as produto
+    let sql = `
+    select
+        produto.id, 
+        produto.nome, 
+        produto.descricao, 
+        produto.peso,
+        produto.cupom,
+        produto.url,
+        produto.preco_original,
+        produto.preco_desconto
+        produto.status_produto,
+        produto.id_tipo_produto,
+        tipo_produto.tipo
+    from tbl_produto as produto
         inner join tbl_tipo_produto as tipo_produto
             on produto.id_tipo_produto = tipo_produto.id;`;
 
