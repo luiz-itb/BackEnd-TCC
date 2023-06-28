@@ -131,9 +131,22 @@ const mdlInsertProduto = async (dadosProduto) => {
     }
 }
 
+const mdlDeleteProduto = async (id) => {
+    let sql = `delete from tbl_produto where id = ${id}` 
+
+    let resultStatus = await prisma.$queryRawUnsafe(sql)
+    
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
+}
+
 module.exports = {
     mdlSelectAllProdutos,
     mdlSelectProdutoById,
     mdlSelectLastId,
-    mdlInsertProduto
+    mdlInsertProduto,
+    mdlDeleteProduto
 }

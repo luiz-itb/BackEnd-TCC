@@ -512,7 +512,12 @@ app.put('/v1/avicultura-silsan/produto/:id', cors(), bodyParserJson, async funct
 
 //EndPoint: Exclui um produto, filtrando pelo ID
 app.delete('/v1/avicultura-silsan/produto/:id', cors(), async function (request, response) {
+    let idProduto = request.params.id;
 
+    let resultDadosProdutos = await controllerProduto.ctlDeletarProduto(idProduto)
+
+    response.status(resultDadosProdutos.status)
+    response.json(resultDadosProdutos)
 })
 
 

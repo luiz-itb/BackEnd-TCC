@@ -92,8 +92,31 @@ const ctlInserirProduto = async (dadosProduto) => {
     }
 }
 
+//Excluir um status de produto existente
+const ctlDeletarProduto = async function (id) {
+
+    if (id == '' || id == undefined || id == null || isNaN(id)) {
+        return message.ERROR_REQUIRE_FIELDS
+    } else {
+        let buscarProduto = await produtosDAO.mdlSelectProdutoById(id)
+
+        if (buscarProduto  == false) {
+            return message.ERROR_REGISTER_NOT_FOUND
+        } else {
+            let status = await produtosDAO.mdlDeleteProduto(id)
+
+            if (status) {
+                return message.SUCCESS_DELETED_ITEM
+            } else {
+                message.ERROR_INTERNAL_SERVER
+            }
+        }
+    }
+}
+
 module.exports = {
     ctlGetProdutos,
     ctlGetProdutoPeloId,
-    ctlInserirProduto
+    ctlInserirProduto,
+    ctlDeletarProduto
 }
