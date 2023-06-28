@@ -74,16 +74,18 @@ const mdlSelectProdutoById = async function (id) {
 const mdlSelectLastId = async function () {
 
     let sql = `
-    select 
+    select
         produto.id, 
-        produto.nome as nome_produto, 
-        produto.descricao as descricao_produto, 
-        produto.peso as peso_produto,
-        produto.cupom as cupom_produto,
-        produto.url as url_produto,
+        produto.nome, 
+        produto.descricao, 
+        produto.peso,
+        produto.cupom,
+        produto.url,
+        produto.preco_original,
+        produto.preco_desconto,
         produto.status_produto,
         produto.id_tipo_produto,
-        tipo_produto.nome as tipo_produto
+        tipo_produto.nome as tipo
     from tbl_produto as produto
         inner join tbl_tipo_produto as tipo_produto
             on produto.id_tipo_produto = tipo_produto.id order by id desc limit 1;`
@@ -112,7 +114,7 @@ const mdlInsertProduto = async (dadosProduto) => {
         '${dadosProduto.nome}',
         '${dadosProduto.descricao}',
         ${dadosProduto.peso},
-        '${dadosProduto.cupm}',
+        '${dadosProduto.cupom}',
         '${dadosProduto.url}',
         ${dadosProduto.preco_original},
         ${dadosProduto.preco_desconto},

@@ -66,7 +66,7 @@ create table tbl_produto(
 	id int not null auto_increment primary key,
     nome varchar(100) not null,
     descricao text not null,
-    peso int not null,
+    peso double not null,
     cupom varchar(15) not null,
     url text not null,
     preco_original decimal(7,2) not null,
