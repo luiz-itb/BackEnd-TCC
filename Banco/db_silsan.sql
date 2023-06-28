@@ -86,7 +86,7 @@ create table tbl_produto(
 insert into tbl_status_usuario(nivel)values('Administrador'), ('Lojista'), ('Cliente'); -- Insert dos tipos de usuario do sistema--
 
 #Usuario
-insert into tbl_usuario (email, senha, id_status_usuario) values ('root', 'silsan1234', 1); -- Usuario de adm --
+insert into tbl_usuario (email, senha, id_status_usuario) values ('root@adm.com', 'silsan1234', 1); -- Usuario de adm --
 insert into tbl_usuario (email, senha, id_status_usuario) values ('vitor@lojista.com', 'lojista1234', 2); -- Usuario do Lojista Vitor --
 insert into tbl_usuario (email, senha, id_status_usuario) values ('bernardo@lojista.com', 'lojista1234', 2); -- Usuario do Lojista Bernardo --
 insert into tbl_usuario (email, senha, id_status_usuario) values ('gabriel@cliente.com', 'cliente1234', 3); -- Usuario do Cliente Gabriel --
@@ -290,7 +290,6 @@ begin
     values (nome_cliente, telefone_cliente, data_nascimento_cliente, id_usuario_cliente);
 end //
 DELIMITER ;
-
 
 # PROCEDURE USUARIO_LOJISTA
 DELIMITER //
