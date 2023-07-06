@@ -1,6 +1,4 @@
-create database db_avicultura_silsan;
-
-use db_avicultura_silsan;
+use aviculturasilsan_db;
 
 -- ----------------------------- CREATES ----------------------------- --
 
