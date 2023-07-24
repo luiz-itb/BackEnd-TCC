@@ -88,30 +88,71 @@ const ctlInserirLojistaUsuario = async (dadosLojistaUsuario) => {
     ) {
         return message.ERROR_REQUIRE_FIELDS
     } else {
-        let resultStatus = await lojistaDao.mdlInsertLojistaUsuario(dadosLojistaUsuario)
-
-        if (resultStatus) {
-            let novoLojista = await lojistaDao.mdlSelectLastId()
-            let novoUsuario = await usuarioDAO.mdlSelectLastByID()
-
-            let dadosLojistaJSON = {
-                status: message.SUCCESS_CREATED_ITEM.status,
-                message: message.SUCCESS_CREATED_ITEM.message,
-                lojista: novoLojista,
-                usuario: novoUsuario
-            }
-
-            return dadosLojistaJSON
+        let verificacaoEmail = await lojistaDao.mdlSelectLojistaByEmail(dadosLojistaUsuario.email_usuario)
+        if (verificacaoEmail) {
+            return message.ERROR_EXISTING_EMAIL
         } else {
-            return message.ERROR_INTERNAL_SERVER
+            let resultStatus = await lojistaDao.mdlInsertLojistaUsuario(dadosLojistaUsuario)
+
+            if (resultStatus) {
+                let novoLojista = await lojistaDao.mdlSelectLastId()
+                let novoUsuario = await usuarioDAO.mdlSelectLastByID()
+
+                let dadosLojistaJSON = {
+                    status: message.SUCCESS_CREATED_ITEM.status,
+                    message: message.SUCCESS_CREATED_ITEM.message,
+                    lojista: novoLojista,
+                    usuario: novoUsuario
+                }
+
+                return dadosLojistaJSON
+            } else {
+                return message.ERROR_INTERNAL_SERVER
+            }
         }
     }
+}
 
+const ctlAtualizarLojistaUsuario = async (dadosLojistaUsuario, idLojista) => {
+    if (
+        idLojista == '' || idLojista == undefined || idLojista == null || isNaN(idLojista) ||
+        dadosLojistaUsuario.novo_email_usuario == '' || dadosLojistaUsuario.novo_email_usuario == undefined || dadosLojistaUsuario.novo_email_usuario == null || dadosLojistaUsuario.novo_email_usuario.length > 255 ||
+        dadosLojistaUsuario.novo_senha_usuario == '' || dadosLojistaUsuario.novo_senha_usuario == undefined || dadosLojistaUsuario.novo_senha_usuario == null || dadosLojistaUsuario.novo_senha_usuario.length > 270 ||
+        dadosLojistaUsuario.novo_nome_lojista == '' || dadosLojistaUsuario.novo_nome_lojista == undefined || dadosLojistaUsuario.novo_nome_lojista == null || dadosLojistaUsuario.novo_nome_lojista.length > 80 ||
+        dadosLojistaUsuario.novo_telefone_lojista == '' || dadosLojistaUsuario.novo_telefone_lojista == undefined || dadosLojistaUsuario.novo_telefone_lojista == null || dadosLojistaUsuario.novo_telefone_lojista.length > 15
+    ) {
+        return message.ERROR_REQUIRE_FIELDS
+    } else {
+        dadosLojistaUsuario.id_lojista = idLojista
+
+        let verificacaoID = await lojistaDao.mdlSelectLojistaId(dadosLojistaUsuario.id_lojista)
+        if (verificacaoID) {
+            return message.ERROR_INVALID_ID
+        } else {
+            let resultStatus = await lojistaDao.mdlUpdateLojistaUsuario(dadosLojistaUsuario)
+
+            if (resultStatus) {
+                let novoLojista = await lojistaDao.mdlSelectLojistaId(dadosLojistaUsuario.id_lojista)
+
+                let dadosLojistaJSON = {
+                    status: message.SUCCESS_UPDATED_ITEM.status,
+                    message: message.SUCCESS_UPDATED_ITEM.message,
+                    lojista_antigo: verificacaoID,
+                    lojista_novo: novoLojista
+                }
+
+                return dadosLojistaJSON
+            } else {
+                return message.ERROR_INTERNAL_SERVER
+            }
+        }
+    }
 }
 
 module.exports = {
     ctlGetLojistas,
     ctlGetLojistaID,
     ctlGetLojistaIdUsuario,
-    ctlInserirLojistaUsuario
+    ctlInserirLojistaUsuario,
+    ctlAtualizarLojistaUsuario
 }

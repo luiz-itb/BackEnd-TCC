@@ -28,6 +28,7 @@ const ERROR_REGISTER_NOT_FOUND= {status: 404, message: 'O SERVIDOR NÃO ENCONTRO
 
 const ERROR_INTERNAL_SERVER = {status: 500, message: 'DEVIDO A UM ERRO INTERNO NO SERVIDOR, NÃO FOI POSSIVEL PROCESSAR A REQUISIÇÃO'}
 
+const ERROR_EXISTING_EMAIL = {status: 400, message: 'O EMAIL INFORMADO JÁ EXISTE NO SISTEMA'}
 
 /*************************************** MENSAGENS DE SUCESSO ***************************************/
 const SUCCESS_CREATED_ITEM = {status: 201, message: 'ITEM CRIADO COM SUCESSO'}
@@ -49,6 +50,8 @@ module.exports = {
     ERROR_INVALID_EMAIL,
     ERROR_INVALID_NOME,
     ERROR_INVALID_VALORES,
+    ERROR_INVALID_EMAIL_SENHA,
+    ERROR_EXISTING_EMAIL,
 
     //Exportes de sucesso
     SUCCESS_CREATED_ITEM,

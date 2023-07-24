@@ -54,6 +54,28 @@ Instalação do PRISMA no projeto (biblioteca para conexão com Banco de Dados)
 */
 
 /*****************************************************************************************************************
+* Objetivo: URL BASE
+* Data: 20/07/2023
+* Autor: Luiz e Gustavo
+* Versão: 1.0
+******************************************************************************************************************/
+
+//EndPoint: Retorna o usuario filtrando pelo ID
+app.get('/v1/avicultura-silsan/', cors(), async function (request, response) {
+    let dadosUsuariosJSON = {
+        status_usuario: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/status-usuario",
+        usuario: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/usuario",
+        lojista: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/lojista",
+        cliente: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/cliente",
+        tipo_produto: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/tipo-produto",
+        produto: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/produto"
+    }
+
+    response.status(200)
+    response.json(dadosUsuariosJSON)
+})
+
+/*****************************************************************************************************************
 * Objetivo: API de controle de STATUS DE USUARIO
 * Data: 20/06/2023
 * Autor: Luiz e Gustavo
@@ -408,6 +430,31 @@ app.post('/v1/avicultura-silsan/lojista-usuario', cors(), bodyParserJson, async 
     }
 })
 
+//EndPoint: Insere um novo lojista junto com o usuario
+app.put('/v1/avicultura-silsan/lojista-usuario/:idLojista', cors(), bodyParserJson, async function (request, response) {
+
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let idLojista = request.params.idLojista
+
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        let resultDadosLojista = await controllerLojsita.ctlAtualizarLojistaUsuario(dadosBody, idLojista)
+
+        response.status(resultDadosLojista.status)
+        response.json(resultDadosLojista)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
+
+
 /*****************************************************************************************************************
 * Objetivo: API de controle de TIPO_PRODUTO
 * Data: 23/06/2023
@@ -456,6 +503,15 @@ app.post('/v1/avicultura-silsan/tipo-produto', cors(), bodyParserJson, async fun
     }
 })
 
+// //EndPoint: Exclui um produto, filtrando pelo ID
+// app.delete('/v1/avicultura-silsan/produto/:id', cors(), async function (request, response) {
+//     let idProduto = request.params.id;
+
+//     let resultDadosProdutos = await controllerProduto.ctlDeletarProduto(idProduto)
+
+//     response.status(resultDadosProdutos.status)
+//     response.json(resultDadosProdutos)
+// })
 
 /*****************************************************************************************************************
 * Objetivo: API de controle de PRODUTOS
@@ -520,5 +576,6 @@ app.delete('/v1/avicultura-silsan/produto/:id', cors(), async function (request,
     response.json(resultDadosProdutos)
 })
 
+const port = 8080 || process.env.PORT;
 
-app.listen(8080, () => console.log('Servidor aguardando requisições na porta 8080.'))
+app.listen(port, () => console.log('Servidor aguardando requisições na porta 8080.'))
