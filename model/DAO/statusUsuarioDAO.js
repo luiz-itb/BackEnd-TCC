@@ -22,7 +22,7 @@ var prisma = new PrismaClient();
 const mdlselectAllStatusUsuario = async function () {
 
     //Script para buscar todos os itens no BD
-    let sql = 'select * from tbL_status_usuario';
+    let sql = 'select * from tbl_status_usuario';
 
     //$queryRawUnsafe(sql) - permite interpretar uma variavel como sendo um sriptSQL
     //queryRaw('select * from tbl_status_usuario') - permite interpretar o scriptSQL direto no metodo
