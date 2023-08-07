@@ -60,7 +60,7 @@ Instalação do PRISMA no projeto (biblioteca para conexão com Banco de Dados)
 * Versão: 1.0
 ******************************************************************************************************************/
 
-//EndPoint: Retorna o usuario filtrando pelo ID
+//EndPoint: Retorna todos os endpoints do sistema
 app.get('/v1/avicultura-silsan/', cors(), async function (request, response) {
     let dadosUsuariosJSON = {
         status_usuario: "https://avicultura-silsa-api.cyclic.app/v1/avicultura-silsan/status-usuario",
