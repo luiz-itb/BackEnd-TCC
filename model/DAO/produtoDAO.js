@@ -131,6 +131,29 @@ const mdlInsertProduto = async (dadosProduto) => {
     }
 }
 
+const mdlUpdateProduto = async (dadosProduto) => {
+    let sql = `
+    update tbl_produto set 
+        nome = '${dadosProduto.nome}',
+        descricao = '${dadosProduto.descricao}',
+        peso = ${dadosProduto.peso},
+        cupom = '${dadosProduto.cupom}',
+        url = '${dadosProduto.url}',
+        preco_original = ${dadosProduto.preco_original},
+        preco_desconto = ${dadosProduto.preco_desconto},
+        id_tipo_produto = ${dadosProduto.id_tipo_produto}
+    where id = ${dadosProduto.id}
+    `
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if (resultStatus) {
+        return true
+    } else {
+        return false
+    }
+}
+
 const mdlDeleteProduto = async (id) => {
     let sql = `delete from tbl_produto where id = ${id}` 
 
@@ -148,5 +171,6 @@ module.exports = {
     mdlSelectProdutoById,
     mdlSelectLastId,
     mdlInsertProduto,
+    mdlUpdateProduto,
     mdlDeleteProduto
 }

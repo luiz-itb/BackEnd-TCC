@@ -59,8 +59,9 @@ const ctlGetProdutoPeloId = async function (id) {
     }
 }
 
-const ctlInserirProduto = async (dadosProduto) => {
+const ctlInserirProduto = async (id, dadosProduto) => {
     if(
+        id == '' || id == undefined || isNaN(id) ||
         dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 100 ||
         dadosProduto.descricao == '' || dadosProduto.descricao == null || dadosProduto.descricao == undefined || 
         dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
@@ -82,6 +83,40 @@ const ctlInserirProduto = async (dadosProduto) => {
                 status: message.SUCCESS_CREATED_ITEM.status,
                 message: message.SUCCESS_CREATED_ITEM.message,
                 novo_produto: novoProduto
+            }
+
+            return dadosProdutoJSON
+        }else{
+            return message.ERROR_INTERNAL_SERVER
+        }
+    }
+}
+
+const ctlAtualizarProduto = async (id, dadosProduto) => {
+    if(
+        dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 100 ||
+        dadosProduto.descricao == '' || dadosProduto.descricao == null || dadosProduto.descricao == undefined || 
+        dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
+        dadosProduto.cupom == '' || dadosProduto.cupom == null || dadosProduto.cupom == undefined || dadosProduto.cupom.length > 15 ||
+        dadosProduto.url == '' || dadosProduto.url == null || dadosProduto.url == undefined ||
+        dadosProduto.preco_original == '' || dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || isNaN(dadosProduto.preco_original) || 
+        dadosProduto.preco_desconto == '' || dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || isNaN(dadosProduto.preco_desconto) || dadosProduto.preco_original <= dadosProduto.preco_desconto ||        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
+    ){
+        return message.ERROR_REQUIRE_FIELDS
+    }else if(dadosProduto.preco_original < dadosProduto.preco_desconto){
+        return message.ERROR_INVALID_VALORES
+    } else{
+        dadosProduto.id = id
+
+        let resultStatus = await produtosDAO.mdlUpdateProduto(dadosProduto)
+
+        if(resultStatus){
+            let produtoAtualizado = await produtosDAO.mdlSelectProdutoById(dadosProduto.id)
+
+            let dadosProdutoJSON = {
+                status: message.SUCCESS_UPDATED_ITEM.status,
+                message: message.SUCCESS_UPDATED_ITEM.message,
+                produto: produtoAtualizado
             }
 
             return dadosProdutoJSON
@@ -117,5 +152,6 @@ module.exports = {
     ctlGetProdutos,
     ctlGetProdutoPeloId,
     ctlInserirProduto,
+    ctlAtualizarProduto,
     ctlDeletarProduto
 }

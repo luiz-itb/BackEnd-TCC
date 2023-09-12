@@ -563,7 +563,24 @@ app.post('/v1/avicultura-silsan/produto', cors(), bodyParserJson, async function
 
 //EndPoint: Atualiza um produto existente, filtrando pelo ID
 app.put('/v1/avicultura-silsan/produto/:id', cors(), bodyParserJson, async function (request, response) {
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
 
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        let idProduto = request.params.id
+
+        let resultDadosProdutos = await controllerProduto.ctlInserirProduto(idProduto, dadosBody)
+
+        response.status(resultDadosProdutos.status)
+        response.json(resultDadosProdutos)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
 })
 
 //EndPoint: Exclui um produto, filtrando pelo ID
