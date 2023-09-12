@@ -573,7 +573,7 @@ app.put('/v1/avicultura-silsan/produto/:id', cors(), bodyParserJson, async funct
 
         let idProduto = request.params.id
 
-        let resultDadosProdutos = await controllerProduto.ctlInserirProduto(idProduto, dadosBody)
+        let resultDadosProdutos = await controllerProduto.ctlAtualizarProduto(idProduto, dadosBody)
 
         response.status(resultDadosProdutos.status)
         response.json(resultDadosProdutos)
