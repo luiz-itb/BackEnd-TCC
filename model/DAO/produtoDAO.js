@@ -54,7 +54,19 @@ const mdlSelectProdutoById = async function (id) {
 
     //Script para buscar todos os itens no BD
     let sql = `
-    select * from tbl_produto as produto
+    select
+        produto.id, 
+        produto.nome, 
+        produto.descricao, 
+        produto.peso,
+        produto.cupom,
+        produto.url,
+        produto.preco_original,
+        produto.preco_desconto,
+        produto.status_produto,
+        produto.id_tipo_produto,
+        tipo_produto.nome as tipo
+    from tbl_produto as produto
         inner join tbl_tipo_produto as tipo_produto
             on produto.id_tipo_produto = tipo_produto.id
     where produto.id = ${id};`
