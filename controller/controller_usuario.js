@@ -162,7 +162,7 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
                         dadosUsuariosJSON = {
                             status: message.SUCCESS_REQUEST.status,
                             message: message.SUCCESS_REQUEST.message,
-                            usuario: dadosUsuario,
+                            usuario: dadosUsuario[0],
                             cliente: {
                                 id: pegarCliente.clientes[0].id_cliente,
                                 nome: pegarCliente.clientes[0].nome,
