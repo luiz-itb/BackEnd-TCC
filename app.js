@@ -229,6 +229,29 @@ app.get('/v1/avicultura-silsan/usuario-email-senha/:email', cors(), async functi
     response.json(dadosUsuariosJSON)
 })
 
+//EndPoint: Retorna o usuario filtrando pelo Email e Senha
+app.post('/v1/avicultura-silsan/login', cors(), bodyParserJson, async function (request, response) {
+
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados encaminhados na requisição
+        let dadosBody = request.body
+
+        console.log(dadosBody);
+
+        let dadosUsuariosJSON = await controllerUsuario.ctlGetUsuarioEmailSenha(dadosBody.email, dadosBody.senha)
+
+        response.status(dadosUsuariosJSON.status)
+        response.json(dadosUsuariosJSON)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
 //EndPoint: Retorna o usuario filtrando pelo Email
 app.get('/v1/avicultura-silsan/usuario-email', cors(), async function (request, response) {
     let dadosUsuariosJSON = await controllerUsuario.ctlGetEmailUsuario()
