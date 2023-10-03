@@ -78,7 +78,7 @@ app.get('/v1/avicultura-silsan/', cors(), async function (request, response) {
 /*****************************************************************************************************************
 * Objetivo: API de controle de STATUS DE USUARIO
 * Data: 20/06/2023
-* Autor: Luiz e Gustavo
+* Autor: Luiz Gustavo
 * Versão: 1.0
 ******************************************************************************************************************/
 
