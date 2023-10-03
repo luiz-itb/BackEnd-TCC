@@ -106,7 +106,7 @@ const mdlSelectLastId = async function () {
     	inner join tbl_usuario as usuario 
 	    	on lojista.id_usuario = usuario.id
 	    inner join tbl_status_usuario as status_usuario 
-			on usuario.id_status_usuario = status_usuario.id order by id desc limit 1;`
+			on usuario.id_status_usuario = status_usuario.id order by lojista.id desc limit 1;`
 
     let rsLojista = await prisma.$queryRawUnsafe(sql)
 
