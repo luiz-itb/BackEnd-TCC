@@ -125,8 +125,8 @@ const ctlInserirClienteUsuario = async (dadosClienteUsuario) => {
             let dadosClienteJSON = {
                 status: message.SUCCESS_CREATED_ITEM.status,
                 message: message.SUCCESS_CREATED_ITEM.message,
-                cliente: novoCliente,
-                usuario: novoUsuario
+                cliente: novoCliente[0],
+                usuario: novoUsuario[0]
             }
 
             return dadosClienteJSON
