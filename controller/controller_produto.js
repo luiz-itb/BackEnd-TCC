@@ -59,9 +59,9 @@ const ctlGetProdutoPeloId = async function (id) {
     }
 }
 
-const ctlInserirProduto = async (id, dadosProduto) => {
+const ctlInserirProduto = async (dadosProduto) => {
     if(
-        id == '' || id == undefined || isNaN(id) ||
+        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto) ||
         dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 100 ||
         dadosProduto.descricao == '' || dadosProduto.descricao == null || dadosProduto.descricao == undefined || 
         dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
