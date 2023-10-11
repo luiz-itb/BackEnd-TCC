@@ -324,6 +324,26 @@ app.put('/v1/avicultura-silsan/usuario/:id', cors(), bodyParserJson, async funct
     }
 })
 
+//EndPoint: Atualiza um usuario existente, filtrando pelo ID
+app.put('/v1/avicultura-silsan/usuario/troca-senha', cors(), bodyParserJson, async function (request, response) {
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        //Recebe os dados dos aluno encaminhado no corpo da requisição
+        let dadosBody = request.body
+
+        let resultDadosAlunos = await controllerUsuario.ctlAtualizarUsuario(dadosBody.id, dadosBody.senha)
+
+        response.status(resultDadosAlunos.status)
+        response.json(resultDadosAlunos)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
 //EndPoint: Exclui um usuario, filtrando pelo ID
 app.delete('/v1/avicultura-silsan/usuario/:id', cors(), async function (request, response) {
     let idUsuario = request.params.id;

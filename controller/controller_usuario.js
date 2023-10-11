@@ -263,6 +263,34 @@ const ctlAtualizarUsuario = async (dadosUsuario, idUsuario) => {
     }
 }
 
+const ctlTrocarSenhaUsuario = async (id, senha) => {
+    if(
+        id == "" || id == null || id == undefined ||
+        senha == "" || senha == null || senha == undefined
+    ){
+        return message.ERROR_REQUIRE_FIELDS
+    }else if(isNaN(id)){
+        return message.ERROR_INVALID_ID
+    }else if(senha.length < 8){
+        return message.ERROR_INVALID_SENHA
+    }else{
+
+        let verificacaoID = await usuarioDao.mdlSelectUsuarioByID(id)
+
+        if(verificacaoID){
+            let resultTrocaSenha = await usuarioDao.mdlTrocarSenhaUsuario(id, senha)
+
+            if(resultTrocaSenha){
+                return message.SUCCESS_UPDATED_ITEM
+            }else{
+                return message.ERROR_INTERNAL_SERVER
+            }
+        }else{
+            return message.ERROR_REGISTER_NOT_FOUND
+        }
+    }
+}
+
 const ctlExcluirUsuario = async (idUsuario) => {
 
     if (idUsuario == '' || idUsuario == undefined || idUsuario == null || isNaN(idUsuario)) {
