@@ -128,8 +128,8 @@ const mdlInsertProduto = async (dadosProduto) => {
         ${dadosProduto.peso},
         '${dadosProduto.cupom}',
         '${dadosProduto.url}',
-        ${dadosProduto.preco_original},
-        ${dadosProduto.preco_desconto},
+        '${dadosProduto.preco_original}',
+        '${dadosProduto.preco_desconto}',
         ${dadosProduto.id_tipo_produto}
     );
     `
