@@ -42,6 +42,23 @@ const mdlSelectAllUsuarios = async () => {
     }
 }
 
+const selectByEmail = async function (email_usuario) {
+    let sqlEmail = `SELECT 
+        tbl_usuario.id, 
+        tbl_usuario.email, 
+        tbl_usuario.senha_reset_token, 
+        tbl_usuario.senha_reset_expiracao
+    FROM tbl_usuario WHERE tbl_usuario.email = '${email_usuario}'`
+
+    let resultCheck = await prisma.$queryRawUnsafe(sqlEmail)
+
+    if (resultCheck.length > 0) {
+        return resultCheck
+    } else {
+        return false
+    }
+}
+
 const mdlSelectUsuarioByID = async (id) => {
     let sql = `select usuario.id,
         usuario.email, 
@@ -249,6 +266,23 @@ const mdlDeleteUsuario = async (id) => {
     }
 }
 
+const mdlUpdateForgotPasswordUsuario = async (passwordResetToken, passwordResetExpiress, id) => {
+    let sql = `update tbl_usuario set 
+            tbl_usuario.senha_reset_token = ${passwordResetToken},
+            tbl_usuario.senha_reset_expiracao = '${passwordResetExpiress}'
+        where tbl_usuario.id = ${id}
+        `
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if (resultStatus) {
+        return resultStatus
+    } else {
+        return false
+    }
+}
+
+
 module.exports = {
     mdlSelectAllUsuarios,
     mdlSelectUsuarioByID,
@@ -261,5 +295,8 @@ module.exports = {
     mdlInsertUsuario,
     mdlUpdateUsuario,
     mdlTrocarSenhaUsuario,
-    mdlDeleteUsuario
+    mdlDeleteUsuario,
+
+    selectByEmail,
+    mdlUpdateForgotPasswordUsuario
 }

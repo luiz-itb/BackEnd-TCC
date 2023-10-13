@@ -32,6 +32,10 @@ const ERROR_INTERNAL_SERVER = {status: 500, message: 'DEVIDO A UM ERRO INTERNO N
 
 const ERROR_EXISTING_EMAIL = {status: 400, message: 'O EMAIL INFORMADO JÁ EXISTE NO SISTEMA'}
 
+const ERROR_INVALID_TOKEN = {status: 400, message: 'O TOKEN É INVÁLIDO, OU SEJA, NÃO É COMPÁTIVEL'}
+
+const ERROR_TOKEN_EXPIRADO = {status: 400, message: 'INTERVALO DE TEMPO ACABOU, TOKEN EXPIRADO'}
+
 /*************************************** MENSAGENS DE SUCESSO ***************************************/
 const SUCCESS_CREATED_ITEM = {status: 201, message: 'ITEM CRIADO COM SUCESSO'}
 
@@ -40,6 +44,8 @@ const SUCCESS_UPDATED_ITEM = {status: 200, message: 'ITEM ATUALIZADO COM SUCESSO
 const SUCCESS_DELETED_ITEM = {status: 200, message: 'ITEM DELETADO COM SUCESSO'}
 
 const SUCCESS_REQUEST = {status: 200, message: 'REQUISIÇÃO BEM SUCEDIDA'}
+
+const SUCCESS_VALID_TOKEN = {status: 200, message: 'TOKEN VÁLIDO'}
 
 
 module.exports = {
@@ -55,10 +61,13 @@ module.exports = {
     ERROR_INVALID_EMAIL_SENHA,
     ERROR_EXISTING_EMAIL,
     ERROR_INVALID_SENHA,
+    ERROR_INVALID_TOKEN,
+    ERROR_TOKEN_EXPIRADO,
 
     //Exportes de sucesso
     SUCCESS_CREATED_ITEM,
     SUCCESS_UPDATED_ITEM,
     SUCCESS_DELETED_ITEM,
-    SUCCESS_REQUEST
+    SUCCESS_REQUEST,
+    SUCCESS_VALID_TOKEN
 }
