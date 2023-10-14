@@ -36,7 +36,7 @@ const mdlSelectAllProdutos = async function () {
     from tbl_produto as produto
         inner join tbl_tipo_produto as tipo_produto
             on produto.id_tipo_produto = tipo_produto.id
-    order by produto.id asc`
+    order by produto.id asc;`
 
     //$queryRawUnsafe(sql) - permite interpretar uma variavel como sendo um sriptSQL
     //queryRaw('select * from tbl_produto') - permite interpretar o scriptSQL direto no metodo
