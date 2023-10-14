@@ -67,8 +67,10 @@ const ctlInserirProduto = async (dadosProduto) => {
         dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
         dadosProduto.cupom == '' || dadosProduto.cupom == null || dadosProduto.cupom == undefined || dadosProduto.cupom.length > 15 ||
         dadosProduto.url == '' || dadosProduto.url == null || dadosProduto.url == undefined ||
-        dadosProduto.preco_original == '' || dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || isNaN(dadosProduto.preco_original) || 
-        dadosProduto.preco_desconto == '' || dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || isNaN(dadosProduto.preco_desconto) || dadosProduto.preco_original <= dadosProduto.preco_desconto ||        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
+        dadosProduto.preco_original == '' || dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || 
+        dadosProduto.preco_desconto == '' || dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || 
+        dadosProduto.preco_original <= dadosProduto.preco_desconto ||        
+        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
     ){
         return message.ERROR_REQUIRE_FIELDS
     }else if(dadosProduto.preco_original < dadosProduto.preco_desconto){
@@ -99,8 +101,8 @@ const ctlAtualizarProduto = async (id, dadosProduto) => {
         dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
         dadosProduto.cupom == '' || dadosProduto.cupom == null || dadosProduto.cupom == undefined || dadosProduto.cupom.length > 15 ||
         dadosProduto.url == '' || dadosProduto.url == null || dadosProduto.url == undefined ||
-        dadosProduto.preco_original == '' || dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || isNaN(dadosProduto.preco_original) || 
-        dadosProduto.preco_desconto == '' || dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || isNaN(dadosProduto.preco_desconto) || dadosProduto.preco_original <= dadosProduto.preco_desconto ||        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
+        dadosProduto.preco_original == '' || dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || 
+        dadosProduto.preco_desconto == '' || dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || dadosProduto.preco_original <= dadosProduto.preco_desconto ||        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
     ){
         return message.ERROR_REQUIRE_FIELDS
     }else if(dadosProduto.preco_original < dadosProduto.preco_desconto){
