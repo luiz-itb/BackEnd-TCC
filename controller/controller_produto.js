@@ -69,12 +69,9 @@ const ctlInserirProduto = async (dadosProduto) => {
         dadosProduto.url == '' || dadosProduto.url == null || dadosProduto.url == undefined ||
         dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || 
          dadosProduto.preco_desconto == null || dadosProduto.preco_desconto == undefined || 
-        dadosProduto.preco_original <= dadosProduto.preco_desconto ||        
         dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == null || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto)
     ){
         return message.ERROR_REQUIRE_FIELDS
-    }else if(dadosProduto.preco_original < dadosProduto.preco_desconto){
-        return message.ERROR_INVALID_VALORES
     } else{
         let resultStatus = await produtosDAO.mdlInsertProduto(dadosProduto)
 
