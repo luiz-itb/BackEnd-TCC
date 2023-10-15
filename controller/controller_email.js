@@ -22,7 +22,7 @@ const ctlEsqueciSenha = async (email) => {
         const user = await usuarioDAO.selectByEmail(email)
 
         if(!user){
-            return message.ERROR_INVALID_EMAIL
+            return message.ERROR_INVALID_EMAIL_TOKEN
         }else{
 
             let id = user[0].id
