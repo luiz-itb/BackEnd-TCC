@@ -155,18 +155,18 @@ const ctlDesativarUsuario = async (idLojista) => {
         return message.ERROR_INVALID_ID
     }else{
 
-        let checkIdLojista = lojistaDao.mdlSelectLojistaId(idLojista)
+        let checkIdLojista = await lojistaDao.mdlSelectLojistaId(idLojista)
 
         if(!checkIdLojista){
             return message.ERROR_INVALID_ID
         }else{
 
-            let idUsuario = checkIdLojista.lojistas[0].id_usuario
+            let idUsuario = checkIdLojista[0].id_usuario
 
             let dadosLojista = await lojistaDao.mdlDesativarLojista(idLojista)
 
             if(dadosLojista){
-                await usuarioDAO.mdlDeleteUsuario(idUsuario)
+                await usuarioDAO.mdlDesativarUsuario(idUsuario)
 
                 return message.SUCCESS_USUARIO_DESATIVADO
 
