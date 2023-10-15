@@ -282,6 +282,22 @@ const mdlUpdateForgotPasswordUsuario = async (passwordResetToken, passwordResetE
     }
 }
 
+const mdlAlterPassword = async (id, password) => {
+    let sql = `update tbl_usuario set 
+            tbl_usuario.senha = '${password}'
+        where tbl_usuario.id = ${id}
+        `
+
+    let resultStatus = await prisma.$executeRawUnsafe(sql)
+
+    if (resultStatus) {
+        return resultStatus
+    } else {
+        return false
+    }
+}
+
+
 
 module.exports = {
     mdlSelectAllUsuarios,
@@ -298,5 +314,6 @@ module.exports = {
     mdlDeleteUsuario,
 
     selectByEmail,
-    mdlUpdateForgotPasswordUsuario
+    mdlUpdateForgotPasswordUsuario,
+    mdlAlterPassword
 }

@@ -682,7 +682,7 @@ app.post('/v1/avicultura-silsan/validar-token', cors(), bodyParserJson, async fu
     }
 })
 
-app.put('/v1/avicultura-silsan/recuperar-conta', cors(), bodyParserJson, async function (request, response) {
+app.put('/v1/avicultura-silsan/trocar-senha', cors(), bodyParserJson, async function (request, response) {
     //Recebe o content-type da requisição
     let contentType = request.headers['content-type']
 
@@ -690,9 +690,8 @@ app.put('/v1/avicultura-silsan/recuperar-conta', cors(), bodyParserJson, async f
     if (String(contentType).toLowerCase() == 'application/json') {
         let body = request.body
 
-        let dadosUsuario = await controllerUsuario.ctlAterarSenha(body)
-
-        response.status(200)
+        let dadosUsuario = await controllerEmail.ctlAterarSenha(body)
+        response.status(dadosUsuario.status)
         response.json(dadosUsuario)
     } else {
         response.status(message.ERROR_INVALID_CONTENT_TYPE.status)

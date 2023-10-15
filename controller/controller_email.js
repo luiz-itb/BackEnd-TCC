@@ -92,8 +92,37 @@ const ctlValidarToken = async (dados) => {
     return returnFunction
 }
 
+const ctlAterarSenha = async (dados) => {
+
+    if (
+        dados.id == null || dados.id == undefined || isNaN(dados.id) ||
+        dados.password == null || dados.password == undefined || dados.password > 256
+    ) {
+        return message.ERROR_REQUIRE_FIELDS
+    } else {
+        let resultStatus = await usuarioDAO.mdlAlterPassword(dados.id, dados.password)
+
+        if (resultStatus) {
+
+            let dadosUsuario = await usuarioDAO.mdlSelectUsuarioByID(dados.id)
+
+            let dadosEnderecoUsuarioJSON = {
+                status: message.SUCCESS_UPDATED_ITEM.status,
+                message: message.SUCCESS_UPDATED_ITEM.message,
+                usuario: dadosUsuario
+            }
+
+            return dadosEnderecoUsuarioJSON
+        } else {
+            return message.ERROR_INTERNAL_SERVER
+        }
+    }
+
+}
+
 
 module.exports = {
     ctlEsqueciSenha,
-    ctlValidarToken
+    ctlValidarToken,
+    ctlAterarSenha
 }
