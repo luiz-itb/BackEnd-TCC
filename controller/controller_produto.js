@@ -61,10 +61,9 @@ const ctlGetProdutoPeloId = async function (id) {
 
 const ctlInserirProduto = async (dadosProduto) => {
     if(
-        dadosProduto.id_tipo_produto == '' || dadosProduto.id_tipo_produto == undefined || isNaN(dadosProduto.id_tipo_produto) ||
-        dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 100 ||
+        dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 200 ||
         dadosProduto.descricao == '' || dadosProduto.descricao == null || dadosProduto.descricao == undefined || 
-        dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
+        dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined ||
         dadosProduto.cupom == '' || dadosProduto.cupom == null || dadosProduto.cupom == undefined || dadosProduto.cupom.length > 15 ||
         dadosProduto.url == '' || dadosProduto.url == null || dadosProduto.url == undefined ||
         dadosProduto.preco_original == null || dadosProduto.preco_original == undefined || 
@@ -95,7 +94,7 @@ const ctlInserirProduto = async (dadosProduto) => {
 
 const ctlAtualizarProduto = async (id, dadosProduto) => {
     if(
-        dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 100 ||
+        dadosProduto.nome == '' || dadosProduto.nome == null || dadosProduto.nome == undefined || dadosProduto.nome.length > 200 ||
         dadosProduto.descricao == '' || dadosProduto.descricao == null || dadosProduto.descricao == undefined || 
         dadosProduto.peso == '' || dadosProduto.peso == null || dadosProduto.peso == undefined || isNaN(dadosProduto.peso) ||
         dadosProduto.cupom == '' || dadosProduto.cupom == null || dadosProduto.cupom == undefined || dadosProduto.cupom.length > 15 ||
