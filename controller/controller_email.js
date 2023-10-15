@@ -7,6 +7,9 @@
 
 const message = require('./modulo/config.js')
 const usuarioDAO = require('../model/DAO/usuarioDAO.js')
+const crypto = require('crypto')
+const mailer = require('./modulo/mailer')
+const moment = require('moment')
 
 
 const ctlEsqueciSenha = async (email) => {
@@ -39,7 +42,8 @@ const ctlEsqueciSenha = async (email) => {
                 context: { token }
             }).then(info => {
                 info.status = 200;
-                info.email = email
+                info.email = email 
+                info.token = token
             
                 return info
             }).catch(error => {

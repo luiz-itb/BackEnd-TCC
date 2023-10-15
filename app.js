@@ -28,6 +28,8 @@ const bodyParser = require('body-parser');
 //Cria o objeto app conforme a classe do express
 const app = express()
 
+var message = require('./controller/modulo/config.js')
+
 app.use((request, response, next) => {
     //Define quem poderá acessar a api(* - Todos)
     response.header('Acess-Control-Allow-Origin', '*')
@@ -634,6 +636,68 @@ app.delete('/v1/avicultura-silsan/produto/:id', cors(), async function (request,
 
     response.status(resultDadosProdutos.status)
     response.json(resultDadosProdutos)
+})
+
+
+/*****************************************************************************************************************
+* Objetivo: API de controle de Email
+* Data: 04/09/2023
+* Autor: Luiz e Felipe
+* Versão: 1.0
+******************************************************************************************************************/
+const controllerEmail = require('./controller/controller_email.js')
+
+app.post('/v1/avicultura-silsan/esqueci-senha', cors(), bodyParserJson, async function (request, response) {
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let body = request.body
+
+        let dadosUsuario = await controllerEmail.ctlEsqueciSenha(body.email)
+
+        response.status(200)
+        response.json(dadosUsuario)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE.message)
+    }
+})
+
+app.post('/v1/avicultura-silsan/validar-token', cors(), bodyParserJson, async function (request, response) {
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let body = request.body
+
+        let dadosUsuario = await controllerEmail.ctlValidarToken(body)
+
+        response.status(dadosUsuario.status)
+        response.json(dadosUsuario)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
+
+app.put('/v1/avicultura-silsan/recuperar-conta', cors(), bodyParserJson, async function (request, response) {
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let body = request.body
+
+        let dadosUsuario = await controllerUsuario.ctlAterarSenha(body)
+
+        response.status(200)
+        response.json(dadosUsuario)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
 })
 
 const port = 8080 || process.env.PORT;
