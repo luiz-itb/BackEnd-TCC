@@ -138,7 +138,7 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
 
             if (dadosUsuario) {
                 if (dadosUsuario[0].nivel == 'Lojista') {
-                    if (dadosUsuario[0].status_usuario = 1) {
+                    if (dadosUsuario[0].status_usuario) {
                         let pegarLojista = await controllerLojista.ctlGetLojistaIdUsuario(dadosUsuario[0].id)
 
                         if (pegarLojista.status == 200) {
