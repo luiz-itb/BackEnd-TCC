@@ -498,7 +498,25 @@ app.put('/v1/avicultura-silsan/lojista-usuario/:idLojista', cors(), bodyParserJs
     }
 })
 
+//EndPoint: Insere um novo lojista junto com o usuario
+app.put('/v1/avicultura-silsan/desativar-lojista/:idLojista', cors(), async function (request, response) {
 
+    //Recebe o content-type da requisição
+    let contentType = request.headers['content-type']
+
+    //Validação para receber dados apenas no formato JSON
+    if (String(contentType).toLowerCase() == 'application/json') {
+        let idLojista = request.params.idLojista
+
+        let resultDadosLojista = await controllerLojsita.ctlDesativarUsuario(idLojista)
+
+        response.status(resultDadosLojista.status)
+        response.json(resultDadosLojista)
+    } else {
+        response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
+        response.json(message.ERROR_INVALID_CONTENT_TYPE)
+    }
+})
 
 
 /*****************************************************************************************************************

@@ -119,7 +119,7 @@ const ctlGetUsuarioIdStatusUsuario = async (idStatusUsuario) => {
             } else {
                 return message.ERROR_REGISTER_NOT_FOUND
             }
-        }else{
+        } else {
             return message.ERROR_INVALID_ID
         }
     }
@@ -138,22 +138,26 @@ const ctlGetUsuarioEmailSenha = async (email, senha) => {
 
             if (dadosUsuario) {
                 if (dadosUsuario[0].nivel == 'Lojista') {
-                    let pegarLojista = await controllerLojista.ctlGetLojistaIdUsuario(dadosUsuario[0].id)
+                    if (dadosUsuario[0].status_usuario = 1) {
+                        let pegarLojista = await controllerLojista.ctlGetLojistaIdUsuario(dadosUsuario[0].id)
 
-                    if (pegarLojista.status == 200) {
-                        dadosUsuariosJSON = {
-                            status: message.SUCCESS_REQUEST.status,
-                            message: message.SUCCESS_REQUEST.message,
-                            usuario: dadosUsuario,
-                            lojista: {
-                                id: pegarLojista.lojistas[0].id_lojista,
-                                nome: pegarLojista.lojistas[0].nome,
-                                telefone: pegarLojista.lojistas[0].telefone,
+                        if (pegarLojista.status == 200) {
+                            dadosUsuariosJSON = {
+                                status: message.SUCCESS_REQUEST.status,
+                                message: message.SUCCESS_REQUEST.message,
+                                usuario: dadosUsuario,
+                                lojista: {
+                                    id: pegarLojista.lojistas[0].id_lojista,
+                                    nome: pegarLojista.lojistas[0].nome,
+                                    telefone: pegarLojista.lojistas[0].telefone,
+                                }
                             }
+                            return dadosUsuariosJSON
+                        } else {
+                            return message.ERROR_INVALID_ID
                         }
-                        return dadosUsuariosJSON
-                    } else {
-                        return message.ERROR_INVALID_ID
+                    }else{
+                        return message.ERRO_USUARIO_DESATIVADO
                     }
                 } else if (dadosUsuario[0].nivel == 'Cliente') {
                     let pegarCliente = await controllerCliente.ctlGetClienteIdUsuario(dadosUsuario[0].id)
@@ -264,28 +268,28 @@ const ctlAtualizarUsuario = async (dadosUsuario, idUsuario) => {
 }
 
 const ctlTrocarSenhaUsuario = async (id, senha) => {
-    if(
+    if (
         id == "" || id == null || id == undefined ||
         senha == "" || senha == null || senha == undefined
-    ){
+    ) {
         return message.ERROR_REQUIRE_FIELDS
-    }else if(isNaN(id)){
+    } else if (isNaN(id)) {
         return message.ERROR_INVALID_ID
-    }else if(senha.length < 8){
+    } else if (senha.length < 8) {
         return message.ERROR_INVALID_SENHA
-    }else{
+    } else {
 
         let verificacaoID = await usuarioDao.mdlSelectUsuarioByID(id)
 
-        if(verificacaoID){
+        if (verificacaoID) {
             let resultTrocaSenha = await usuarioDao.mdlTrocarSenhaUsuario(id, senha)
 
-            if(resultTrocaSenha){
+            if (resultTrocaSenha) {
                 return message.SUCCESS_UPDATED_ITEM
-            }else{
+            } else {
                 return message.ERROR_INTERNAL_SERVER
             }
-        }else{
+        } else {
             return message.ERROR_REGISTER_NOT_FOUND
         }
     }

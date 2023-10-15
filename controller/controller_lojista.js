@@ -149,7 +149,7 @@ const ctlAtualizarLojistaUsuario = async (dadosLojistaUsuario, idLojista) => {
     }
 }
 
-const ctlDeleteUsuario = async (idLojista) => {
+const ctlDesativarUsuario = async (idLojista) => {
 
     if (idLojista == null || idLojista == undefined || idLojista == '' || isNaN(idLojista)) {
         return message.ERROR_INVALID_ID
@@ -158,20 +158,20 @@ const ctlDeleteUsuario = async (idLojista) => {
         let checkIdLojista = lojistaDao.mdlSelectLojistaId(idLojista)
 
         if(!checkIdLojista){
-
+            return message.ERROR_INVALID_ID
         }else{
 
             let idUsuario = checkIdLojista.lojistas[0].id_usuario
 
-            let dadosLojista = lojistaDao.mdlDesativarLojista(idLojista)
+            let dadosLojista = await lojistaDao.mdlDesativarLojista(idLojista)
 
             if(dadosLojista){
-                let excluirUsuario = usuarioDAO.mdlDeleteUsuario(idUsuario)
+                await usuarioDAO.mdlDeleteUsuario(idUsuario)
 
-
+                return message.SUCCESS_USUARIO_DESATIVADO
 
             }else{
-
+                return message.ERROR_INTERNAL_SERVER
             }
         }
     }
@@ -182,5 +182,6 @@ module.exports = {
     ctlGetLojistaID,
     ctlGetLojistaIdUsuario,
     ctlInserirLojistaUsuario,
-    ctlAtualizarLojistaUsuario
+    ctlAtualizarLojistaUsuario,
+    ctlDesativarUsuario
 }

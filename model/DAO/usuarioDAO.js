@@ -121,6 +121,7 @@ const mdlSelectUsuarioByEmailAndSenha = async (email, senha) => {
     let sql = `select usuario.id,
         usuario.email, 
         usuario.senha,
+        usuario.status_usuario,
         usuario.id_status_usuario, 
         status_usuario.nivel 
     from tbl_usuario as usuario 
