@@ -254,8 +254,11 @@ const mdlTrocarSenhaUsuario = async (id, senha) => {
 
 }
 
-const mdlDeleteUsuario = async (id) => {
-    let sql = `delete from tbl_usuario where id = ${id}` 
+const mdlDesativarUsuario = async (id) => {
+    let sql = `update tbl_usuario set 
+            tbl_usuario.status_usuario = 0
+        where tbl_usuario.id = ${id}
+        `
 
     let resultStatus = await prisma.$queryRawUnsafe(sql)
     
@@ -311,7 +314,7 @@ module.exports = {
     mdlInsertUsuario,
     mdlUpdateUsuario,
     mdlTrocarSenhaUsuario,
-    mdlDeleteUsuario,
+    mdlDesativarUsuario,
 
     selectByEmail,
     mdlUpdateForgotPasswordUsuario,

@@ -500,6 +500,7 @@ app.put('/v1/avicultura-silsan/lojista-usuario/:idLojista', cors(), bodyParserJs
 
 
 
+
 /*****************************************************************************************************************
 * Objetivo: API de controle de TIPO_PRODUTO
 * Data: 23/06/2023

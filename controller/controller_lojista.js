@@ -149,6 +149,34 @@ const ctlAtualizarLojistaUsuario = async (dadosLojistaUsuario, idLojista) => {
     }
 }
 
+const ctlDeleteUsuario = async (idLojista) => {
+
+    if (idLojista == null || idLojista == undefined || idLojista == '' || isNaN(idLojista)) {
+        return message.ERROR_INVALID_ID
+    }else{
+
+        let checkIdLojista = lojistaDao.mdlSelectLojistaId(idLojista)
+
+        if(!checkIdLojista){
+
+        }else{
+
+            let idUsuario = checkIdLojista.lojistas[0].id_usuario
+
+            let dadosLojista = lojistaDao.mdlDesativarLojista(idLojista)
+
+            if(dadosLojista){
+                let excluirUsuario = usuarioDAO.mdlDeleteUsuario(idUsuario)
+
+
+
+            }else{
+
+            }
+        }
+    }
+}
+
 module.exports = {
     ctlGetLojistas,
     ctlGetLojistaID,

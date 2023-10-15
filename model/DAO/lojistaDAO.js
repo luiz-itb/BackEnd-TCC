@@ -24,13 +24,15 @@ const mdlSelectAllLojista = async () => {
         lojista.nome,
         lojista.telefone,
         lojista.id_usuario,
+        lojista.status_lojista,
         usuario.email,
         status_usuario.nivel
     from tbl_lojista as lojista
     	inner join tbl_usuario as usuario 
 	    	on lojista.id_usuario = usuario.id
 	    inner join tbl_status_usuario as status_usuario 
-			on usuario.id_status_usuario = status_usuario.id;`
+			on usuario.id_status_usuario = status_usuario.id
+    where lojista.status_lojista = 1`
 
     let rsLojista = await prisma.$queryRawUnsafe(sql)
 
@@ -48,6 +50,7 @@ const mdlSelectLojistaId = async (id) => {
         lojista.nome,
         lojista.telefone,
         lojista.id_usuario,
+        lojista.status_lojista,
         usuario.email,
         status_usuario.nivel
     from tbl_lojista as lojista
@@ -181,6 +184,21 @@ const mdlUpdateLojistaUsuario = async (dadosLojistaUsuario) => {
     }
 }
 
+const mdlDesativarLojista = async (id) => {
+    let sql = `update tbl_lojista set 
+            tbl_lojista.status_lojista = 0
+        where tbl_lojista.id = ${id}
+        `
+
+    let resultStatus = await prisma.$queryRawUnsafe(sql)
+    
+    if(resultStatus){
+        return true
+    }else{
+        return false
+    }
+}
+
 module.exports = {
     mdlSelectAllLojista,
     mdlSelectLojistaId,
@@ -188,5 +206,6 @@ module.exports = {
     mdlSelectLastId,
     mdlSelectLojistaByEmail,
     mdlInsertLojistaUsuario,
-    mdlUpdateLojistaUsuario
+    mdlUpdateLojistaUsuario,
+    mdlDesativarLojista
 }
