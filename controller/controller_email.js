@@ -21,11 +21,11 @@ const ctlEsqueciSenha = async (email) => {
     }else{
         const user = await usuarioDAO.selectByEmail(email)
 
-        let id = user[0].id
-
         if(!user){
             return message.ERROR_INVALID_EMAIL
         }else{
+
+            let id = user[0].id
 
             const token = crypto.randomInt(1000, 9999)
 

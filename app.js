@@ -656,7 +656,7 @@ app.post('/v1/avicultura-silsan/esqueci-senha', cors(), bodyParserJson, async fu
 
         let dadosUsuario = await controllerEmail.ctlEsqueciSenha(body.email)
 
-        response.status(200)
+        response.status(dadosUsuario.status)
         response.json(dadosUsuario)
     } else {
         response.status(message.ERROR_INVALID_CONTENT_TYPE.status)
