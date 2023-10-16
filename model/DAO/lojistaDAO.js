@@ -134,7 +134,7 @@ const mdlSelectLojistaByEmail = async (email) => {
 	    	on lojista.id_usuario = usuario.id
 	    inner join tbl_status_usuario as status_usuario 
 			on usuario.id_status_usuario = status_usuario.id
-    where usuario.email = "${email} and usuario.status_usuario = 1" ;`
+    where usuario.email = "${email}" and usuario.status_usuario = 1 ;`
 
     let rsLojista = await prisma.$queryRawUnsafe(sql)
 
