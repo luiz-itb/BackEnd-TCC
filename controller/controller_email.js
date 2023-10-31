@@ -1,7 +1,7 @@
 /*********************************************************************************************
 * Objetivo: Responsável pela regra de negócios referente ao crud de endereco
 * Data : 31/08/2023
-* Autor: Felipe Graciano and Luiz Gustavo
+* Autor: Luiz Gustavo
 * Versão : 1.0
 *********************************************************************************************/
 

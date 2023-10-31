@@ -1,6 +1,6 @@
 /**************************************************************************************
  *  Objetivo: Responsavel pela regra de negocio referente ao CRUD de ALUNOS
- *  Autor: Luiz e Muryllo
+ *  Autor: Luiz 
  *  Data: 14/04/2023
  *  Versão: 1.0
  **************************************************************************************/

@@ -1,6 +1,6 @@
 /*********************************************************************************************************
  * Objetivo: Arquivo responsavel por padronizar as mensagens de ERRO, SUCESSO, FUNÇÕES, VARIAVEIS
- * Autor: Luiz Gustavo e Muryllo Vieira
+ * Autor: Luiz Gustavo
  * Data: 22/05/2023
  * Versão: 1.0
 *********************************************************************************************************/
